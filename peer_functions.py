@@ -86,7 +86,10 @@ def retrieve_listener_details_auth_key(s, key, auth_key):
     # my port
     encrypted_data = s.recv(256)
     data = aes_decrypt(encrypted_data=encrypted_data,key=key)
-    my_port = int(str(data, 'UTF-8'))
+    try:
+        my_port = int(str(data, 'UTF-8'))
+    except:
+        my_port = 0
     
     return (my_ip, my_port)
     
@@ -104,11 +107,16 @@ def retrieve_listener_details_username(s, key, username):
     encrypted_data = s.recv(256)
     data = aes_decrypt(encrypted_data=encrypted_data,key=key)
     listener_ip = str(data, 'UTF-8')
+    print("RECEIVED IP")
     
     # my port
     encrypted_data = s.recv(256)
     data = aes_decrypt(encrypted_data=encrypted_data,key=key)
-    listener_port = int(str(data, 'UTF-8'))
+    try:
+        listener_port = int(str(data, 'UTF-8'))
+    except:
+        listener_port = 0
+    print("RECEIVED PORT")
     
     return (listener_ip, listener_port)
     
